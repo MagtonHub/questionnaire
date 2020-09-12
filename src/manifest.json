@@ -1,0 +1,8 @@
+{
+  "name": "CLARK Questionnaire App",
+  "short_name": "CLARK",
+  "display": "standalone",
+  "start_url": "./",
+  "theme_color": "#002140",
+  "background_color": "#001529"
+}
