@@ -21,8 +21,12 @@ export default defineConfig({
       component: '../layouts/MainLayout',
       routes: [
         {
-          path: '/',
+          path: '/:id',
           component: './Questionnaire',
+        },
+        {
+          exact: true,
+          component: './401',
         },
       ],
     },

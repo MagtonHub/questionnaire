@@ -29,6 +29,7 @@
     "__test__/**/*",
     "typings/**/*",
     "config/**/*",
+    "mock/**/*",
     ".eslintrc.js",
     ".stylelintrc.js",
     ".prettierrc.js",
