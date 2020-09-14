@@ -6,11 +6,7 @@ export default defineConfig({
   dva: {
     hmr: true,
   },
-  locale: {
-    default: 'en-US',
-    // default true, when it is true, will use `navigator.language` overwrite default
-    baseNavigator: true,
-  },
+  locale: false,
   targets: {
     ie: 11,
   },
