@@ -12,6 +12,7 @@ interface Props {
 const useStyles = makeStyles(() => ({
   appBar: {
     boxShadow: 'none',
+    paddingTop: 5,
   },
 }));
 
@@ -22,7 +23,7 @@ export default (props: Props) => {
     <AppBar position="sticky" color="transparent" className={classes.appBar}>
       <Toolbar>
         <Grid container spacing={0} direction="column" alignItems="center">
-          <Logo width={breakpoint === 'xs' ? 55 : 110} height={breakpoint === 'xs' ? 24 : 48} />
+          <Logo width={breakpoint === 'xs' ? 110 : 130} />
         </Grid>
       </Toolbar>
     </AppBar>
