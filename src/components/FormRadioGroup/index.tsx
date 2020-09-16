@@ -1,4 +1,4 @@
-import React, { useEffect, useState, Dispatch, SetStateAction } from 'react';
+import React, { useState, Dispatch, SetStateAction } from 'react';
 import { RadioGroup, Fade, FormControlLabel } from '@material-ui/core';
 import { FormRadio, FormCheckbox } from './styles';
 
@@ -12,18 +12,8 @@ interface Props {
 }
 
 const FormRadioGroup = (props: Props) => {
-  const [checkedValues, setCheckedValues] = useState([]);
+  const [checkedValues, setCheckedValues] = useState({});
   const { handleChange, value, choices, multiple, setValues, currentIndex } = props;
-
-  useEffect(() => {
-    setValues(
-      (prevValues) =>
-        ({
-          ...prevValues,
-          [currentIndex]: checkedValues,
-        } as any),
-    );
-  }, [checkedValues]);
 
   const handleCheckboxChange = async (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -32,11 +22,18 @@ const FormRadioGroup = (props: Props) => {
     const checkedValue = (event.target as HTMLInputElement).value;
     const isChecked = (event.target as HTMLInputElement).checked;
     if (isChecked) {
-      setCheckedValues(
+      await setCheckedValues(
         (prevChecked) =>
           ({
             ...prevChecked,
             [index]: checkedValue,
+          } as any),
+      );
+      setValues(
+        (prevValues) =>
+          ({
+            ...prevValues,
+            [currentIndex]: checkedValues,
           } as any),
       );
     } else {
@@ -44,7 +41,14 @@ const FormRadioGroup = (props: Props) => {
         ...checkedValues,
       };
       delete selectedAnswers[index];
-      setCheckedValues(selectedAnswers);
+      await setCheckedValues(selectedAnswers);
+      setValues(
+        (prevValues) =>
+          ({
+            ...prevValues,
+            [currentIndex]: checkedValues,
+          } as any),
+      );
     }
   };
 
