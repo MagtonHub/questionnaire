@@ -1,4 +1,4 @@
-import React, { useState, Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { RadioGroup, Fade, FormControlLabel } from '@material-ui/core';
 import { FormRadio, FormCheckbox } from './styles';
 
@@ -7,33 +7,22 @@ interface Props {
   value: string;
   choices: any;
   multiple?: boolean;
-  setValues: Dispatch<SetStateAction<never[]>>;
-  currentIndex: number;
+  setCheckedValues: Dispatch<SetStateAction<{}>>;
+  checkedValues: any;
 }
 
 const FormRadioGroup = (props: Props) => {
-  const [checkedValues, setCheckedValues] = useState({});
-  const { handleChange, value, choices, multiple, setValues, currentIndex } = props;
+  const { handleChange, value, choices, multiple, setCheckedValues, checkedValues } = props;
 
-  const handleCheckboxChange = async (
-    event: React.ChangeEvent<HTMLInputElement>,
-    index: number,
-  ) => {
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
     const checkedValue = (event.target as HTMLInputElement).value;
     const isChecked = (event.target as HTMLInputElement).checked;
     if (isChecked) {
-      await setCheckedValues(
+      setCheckedValues(
         (prevChecked) =>
           ({
             ...prevChecked,
             [index]: checkedValue,
-          } as any),
-      );
-      setValues(
-        (prevValues) =>
-          ({
-            ...prevValues,
-            [currentIndex]: checkedValues,
           } as any),
       );
     } else {
@@ -41,14 +30,7 @@ const FormRadioGroup = (props: Props) => {
         ...checkedValues,
       };
       delete selectedAnswers[index];
-      await setCheckedValues(selectedAnswers);
-      setValues(
-        (prevValues) =>
-          ({
-            ...prevValues,
-            [currentIndex]: checkedValues,
-          } as any),
-      );
+      setCheckedValues(selectedAnswers);
     }
   };
 
@@ -61,7 +43,10 @@ const FormRadioGroup = (props: Props) => {
             value={choice.value}
             control={
               multiple ? (
-                <FormCheckbox onChange={(e) => handleCheckboxChange(e, index)} />
+                <FormCheckbox
+                  checked={!!checkedValues[index]}
+                  onChange={(e) => handleCheckboxChange(e, index)}
+                />
               ) : (
                 <FormRadio />
               )
