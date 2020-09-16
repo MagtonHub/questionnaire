@@ -7,6 +7,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   margin: {
     margin: theme.spacing(1),
   },
+  fab: {
+    position: 'fixed',
+    bottom: theme.spacing(2),
+    right: theme.spacing(2),
+  },
 }));
 
 export default useStyles;

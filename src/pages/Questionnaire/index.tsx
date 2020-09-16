@@ -1,13 +1,11 @@
 import React, { Fragment, useEffect, useState, KeyboardEvent } from 'react';
 import { history } from 'umi';
-import withWidth from '@material-ui/core/withWidth';
+import { CircularProgress, MobileStepper, Button, Grid, Box, withWidth } from '@material-ui/core';
 import { Breakpoint } from '@material-ui/core/styles/createBreakpoints';
-import Box from '@material-ui/core/Box';
-import Grid from '@material-ui/core/Grid';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import QuestionnaireForm from '@/components/QuestionnaireForm';
-import Progress from '@/components/Progress';
+import { KeyboardArrowUp, KeyboardArrowDown } from '@material-ui/icons';
+import QuestionWrapper from '@/components/QuestionWrapper';
 import { queryQuestionnaire } from '@/services/questionnaire';
+import Progress from '@/components/Progress';
 import Splash from '@/components/Splash';
 import useStyles from './styles';
 
@@ -24,8 +22,9 @@ const Questionnaire = (props: Props) => {
   const { match } = props;
   const [quest, setQuest] = useState<API.QuestionnaireData>();
   const [started, setStarted] = useState<boolean>(false);
+  const [currentIndex, setCurrentIndex] = useState<number>(0);
+  const [buttonVisible, setButtonVisible] = useState(false);
   const identifier = match.params.id;
-
   const fetchQuestionnaire = async () => {
     try {
       const questionnaireData: any = await queryQuestionnaire(identifier);
@@ -57,8 +56,17 @@ const Questionnaire = (props: Props) => {
     fetchQuestionnaire();
   }, []);
 
+  const handleNext = () => {
+    setCurrentIndex((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setCurrentIndex((prevActiveStep) => prevActiveStep - 1);
+  };
+
   const { width } = props;
   const classes = useStyles();
+  const totalSteps = quest && quest.questions ? quest.questions.length : 0;
   return (
     <Fragment>
       <Grid
@@ -74,7 +82,13 @@ const Questionnaire = (props: Props) => {
         {quest ? (
           <Box my={5}>
             {started ? (
-              <QuestionnaireForm quest={quest} />
+              <QuestionWrapper
+                quest={quest}
+                setCurrentIndex={setCurrentIndex}
+                currentIndex={currentIndex}
+                setButtonVisible={setButtonVisible}
+                buttonVisible={buttonVisible}
+              />
             ) : (
               <Splash handleStart={handleStart} quest={quest} breakpoint={width} />
             )}
@@ -84,6 +98,36 @@ const Questionnaire = (props: Props) => {
         )}
         <Progress breakpoint={width} progress={progressPercent(2.5)} />
       </Grid>
+      <div className={classes.fab}>
+        {started && (
+          <MobileStepper
+            steps={totalSteps}
+            position="static"
+            variant="text"
+            activeStep={currentIndex}
+            nextButton={
+              <Button
+                size="small"
+                onClick={handleNext}
+                disabled={
+                  currentIndex === totalSteps - 1 ||
+                  (!buttonVisible &&
+                    quest &&
+                    quest.questions &&
+                    quest.questions[currentIndex].required)
+                }
+              >
+                <KeyboardArrowDown />
+              </Button>
+            }
+            backButton={
+              <Button size="small" onClick={handleBack} disabled={currentIndex === 0}>
+                <KeyboardArrowUp />
+              </Button>
+            }
+          />
+        )}
+      </div>
     </Fragment>
   );
 };
