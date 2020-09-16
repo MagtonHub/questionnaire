@@ -96,7 +96,7 @@ const Questionnaire = (props: Props) => {
         ) : (
           <CircularProgress />
         )}
-        <Progress progress={progressPercent(2.5)} />
+        {started && <Progress progress={progressPercent(currentIndex + 1)} />}
       </Grid>
       <div className={classes.fab}>
         {started && (

@@ -44,7 +44,7 @@ const FormRadioGroup = (props: Props) => {
             control={
               multiple ? (
                 <FormCheckbox
-                  checked={checkedValues[index]}
+                  checked={!!checkedValues[index]}
                   onChange={(e) => handleCheckboxChange(e, index)}
                 />
               ) : (
