@@ -1,4 +1,4 @@
-import React, { useState, Dispatch } from 'react';
+import React, { useState, Dispatch, useEffect } from 'react';
 import { FormControl, Button, Zoom, Box } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import SendIcon from '@material-ui/icons/Send';
@@ -18,6 +18,7 @@ const QuestionWrapper = (props: Props) => {
   const { quest, currentIndex, setCurrentIndex, buttonVisible, setButtonVisible } = props;
   const classes = useStyles();
   const [values, setValues] = useState([]);
+  const [checkedValues, setCheckedValues] = useState({});
   const [error, setError] = useState(false);
 
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -81,8 +82,8 @@ const QuestionWrapper = (props: Props) => {
             value={values[currentIndex] || ''}
             choices={choices}
             multiple={multiple}
-            currentIndex={currentIndex}
-            setValues={setValues}
+            checkedValues={checkedValues}
+            setCheckedValues={setCheckedValues}
           />
         );
       case 'text':
@@ -92,6 +93,20 @@ const QuestionWrapper = (props: Props) => {
     }
   };
   const totalSteps = (quest && quest.questions && quest.questions.length) || 0;
+
+  useEffect(() => {
+    setValues(
+      (prevValues) =>
+        ({
+          ...prevValues,
+          [currentIndex]: checkedValues,
+        } as any),
+    );
+  }, [checkedValues]);
+
+  useEffect(() => {
+    console.log(values);
+  }, [values]);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -136,7 +151,12 @@ const QuestionWrapper = (props: Props) => {
                       endIcon={<ArrowForwardIosIcon />}
                       onClick={() => handleNext(index)}
                     >
-                      {question.required || values[currentIndex] ? 'Next' : 'Skip'}
+                      {question.required ||
+                      (values[currentIndex] &&
+                        Object.keys(checkedValues).length !== 0 &&
+                        checkedValues.constructor === Object)
+                        ? 'Next'
+                        : 'Skip'}
                     </Button>
                   )}
                   {currentIndex === totalSteps - 1 && (
