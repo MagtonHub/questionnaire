@@ -32,10 +32,10 @@ describe('CLARK test', () => {
     await page.waitForSelector('Header', {
       timeout: 2000,
     });
-    const haveFooter = await page.evaluate(
+    const haveHeader = await page.evaluate(
       () => document.getElementsByTagName('Header').length > 0,
     );
-    expect(haveFooter).toBeTruthy();
+    expect(haveHeader).toBeTruthy();
   };
 
   const routers = formatter(RouterConfig);
