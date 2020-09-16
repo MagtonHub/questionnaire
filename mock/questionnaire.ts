@@ -13,7 +13,7 @@ const questionnaires = [
           headline: 'Wen möchtest Du versichern?',
           description: null,
           required: false,
-          multiple: 'true',
+          multiple: 'false',
           choices: [
             {
               label: 'Meine Familie mit Kindern',
@@ -48,7 +48,7 @@ const questionnaires = [
           identifier: 'list_12111610',
           headline: 'Bist Du Beamter oder im öffentlichen Dienst angestellt?',
           description: null,
-          required: true,
+          required: false,
           multiple: 'false',
           choices: [
             {
@@ -342,7 +342,7 @@ const questionnaires = [
           identifier: 'list_12110971',
           headline: 'Hast Du ein Motorboot?',
           description: null,
-          required: true,
+          required: false,
           multiple: 'false',
           choices: [
             {
