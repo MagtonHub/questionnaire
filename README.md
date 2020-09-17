@@ -1,6 +1,6 @@
 # Introduction
 
-A generic production-ready React questionnaire app was inspired by TypeForm using mock.js as an API.
+A generic production-ready React questionnaire web application was inspired by TypeForm.
 
 This React project is initialized with [create-umi](https://github.com/umijs/create-umi). Follow is the quick guide for how to use.
 
