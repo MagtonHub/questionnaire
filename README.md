@@ -1,6 +1,21 @@
 # Introduction
 
+A generic production-ready React questionnaire app inspired by TypeForm using mock.js as an API.
+
 This React project is initialized with [create-umi](https://github.com/umijs/create-umi). Follow is the quick guide for how to use.
+
+# Features
+
+- GroupRadio items
+- Multichoice items
+- Text (single/multilines)
+- Jumps
+
+# Screenshot
+
+![React Questionnaire App](https://magton.com/github/1.png)
+
+![React Questionnaire App](https://magton.com/github/2.png)
 
 ## Environment Prepare
 
