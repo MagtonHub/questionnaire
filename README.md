@@ -1,6 +1,6 @@
 # Introduction
 
-A generic production-ready React questionnaire web application was inspired by TypeForm.
+A generic React questionnaire web application was inspired by TypeForm.
 
 This React project is initialized with [create-umi](https://github.com/umijs/create-umi). Follow is the quick guide for how to use.
 
@@ -42,6 +42,13 @@ Scripts provided in `package.json`. It's safe to modify or add additional script
 ```bash
 npm start
 ```
+
+### Accessing questionnaire
+
+you can access the questionnaire by identifier querying:
+
+http://localhost:8000/:id (e.g. http://localhost:8000/ewBzTS).
+
 
 ### Build project
 
